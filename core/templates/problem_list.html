@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if empty_queryset %}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">{{message}}</h1>
+    <a class="btn btn-primary btn-lg" href="{% url 'new_problem' %}" role="button">Add Error</a>
+  </div>
+</div>
+{% endif %}
+{% for problem in problems %}
+  {% csrf_token %} 
+  <div class="card text-center">
+    <div class="card-header">
+        <strong>Count {{ problem.count }}<p class="card-text">     Added : {{ problem.date_time }}</p></strong>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ problem.pro_lang }}/{{ problem.framework_library }}</h5>
+      <p class="card-text">{{ problem.error_name }}</p>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Options
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="{% url 'solution_list' problem.pk %}">Solutions</a>
+          <a class="dropdown-item" href="{% url 'new_solution' problem.pk %}">Add Solution</a>
+          <a class="dropdown-item" href="#"><form method="post" action="{% url 'delete_problem' problem.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-light">Delete</button>
+          </form>
+        </a>
+        </div>
+      </div>
+    </div>
+{% endfor %}
+{% endblock %}

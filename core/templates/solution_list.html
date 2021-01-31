@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if empty_queryset %}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">You haven't added any Solutions for this Problem yet!</h1>
+  </div>
+</div>
+{% endif %}
+  {% for solution in solutions %}
+    <div class="card w-auto">
+      <div class="card-body">
+        <h5 class="card-title">{{ solution.remark }}</h5>
+        <p class="card-text">{{ solution.text_sol }}</p>
+        <a href="{{solution.solution_link}}" class="btn btn-primary " target="blank">Solution Link</a>
+        <br><br>
+        <form method="post" action="{% url 'delete_solution' solution.pk %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger ">Delete</button>
+        </form>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}

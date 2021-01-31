@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    {% if user.is_authenticated %}
+    <div class="jumbotron">
+        <h1 class="display-4">Hello, {{ user.username }}!</h1>
+        <p class="lead">We help you to resolve error faster & keep track of your errors</p>
+        <form action = "{% url 'search' %}" class="form-inline md-form mr-auto mb-4" method="GET">
+            <input class="form-control mr-sm-2" type="text" placeholder="You are almost there" aria-label="Search" name = "Search" required>
+            <button class="btn btn-outline-info" type="submit">Search</button>
+        </form>
+        <hr class="my-4">
+        <p>Click on the button below to add a new Error & it's solution</p>
+        <p class="lead">
+          <a class="btn btn-primary btn-lg" href="{% url 'new_problem' %}" role="button">Add Error</a>
+        </p>
+    </div>
+    {% else %}
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <h1 class="display-4"><a href="{% url 'login' %}">Login</a>   <a href="{% url 'register' %}">Register</a></h1>
+          <p class="lead">We help you to resolve error faster & keep track of your errors.</p>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

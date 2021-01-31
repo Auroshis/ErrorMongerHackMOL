@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if alert_value %}
+<div class="alert alert-{{type}} alert-dismissible fade show" role="alert">
+  <strong>Successfully added!</strong> You can fill again to add more Solution.
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endif %}
+<form action="{% url 'add_solution' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" id="problem_pk" name="problem_pk" value="{{ pk }}">
+    <div class="form-group">
+      <label for="sollink">Solution Link</label>
+      <input type="text" class="form-control" id="sollink" name="sollink" placeholder="Enter Link of the solution" required>
+    </div>
+    <div class="form-group">
+      <label for="remark">Remark</label>
+      <input type="text" class="form-control" id="remark" name="remark" placeholder="Enter Remarks if any" required>
+    </div>
+    <div class="form-group">
+      <label for="code">Code Snippet</label>
+      <textarea class="form-control" id="code" name="code" placeholder="Wanna Add Some code Snippets"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}
